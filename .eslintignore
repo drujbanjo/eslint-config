@@ -1,0 +1,20 @@
+# Systme catalogs
+node_modules/
+dist/
+build/
+.out/
+.next/
+coverage/
+temp/
+tmp/
+
+# Configs
+*.config.js
+*.config.cjs
+*.config.mjs
+*.config.ts
+
+# IDE and other
+.vscode/
+.env*
+*.log
