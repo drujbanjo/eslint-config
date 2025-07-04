@@ -57,7 +57,6 @@ export default [
 
   {
     rules: {
-      eqeqeq: ['error', 'always'],
       'no-debugger': 'error',
       'prefer-const': 'error',
       'no-var': 'error',
