@@ -1,38 +1,106 @@
-// @ts-check
-import eslint from "@eslint/js"
-import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended"
-import globals from "globals"
-import tseslint from "typescript-eslint"
+import js from "@eslint/js"
+import next from "@next/eslint-plugin-next"
+import prettier from "eslint-config-prettier"
+import importPlugin from "eslint-plugin-import"
+import react from "eslint-plugin-react"
+import reactHooks from "eslint-plugin-react-hooks"
+import unusedImports from "eslint-plugin-unused-imports"
+import * as tseslint from "typescript-eslint"
 
-export default tseslint.config(
+/** @type {import("eslint").Linter.FlatConfig[]} */
+export default [
+	js.configs.recommended,
+
+	...tseslint.configs.recommended,
 	{
-		ignores: ["eslint.config.mjs", "prettier.config.mjs"]
-	},
-	eslint.configs.recommended,
-	...tseslint.configs.recommendedTypeChecked,
-	eslintPluginPrettierRecommended,
-	{
+		files: ["src/**/*.ts", "src/**/*.tsx"],
+		...tseslint.configs.recommendedTypeChecked[0], // первый объект из массива
 		languageOptions: {
-			globals: {
-				...globals.node,
-				...globals.jest
-			},
-			sourceType: "commonjs",
+			parser: tseslint.parser,
 			parserOptions: {
-				projectService: true,
-				tsconfigRootDir: import.meta.dirname
+				project: ["./tsconfig.json"]
 			}
 		}
 	},
 	{
-		rules: {
-			"@typescript-eslint/no-explicit-any": "off",
-			"@typescript-eslint/no-floating-promises": "warn",
-			"@typescript-eslint/no-unsafe-argument": "warn",
-			"@typescript-eslint/no-unsafe-call": "off",
-			"prettier/prettier": "off",
-			"@typescript-eslint/no-unsafe-return": "off",
-			"@typescript-eslint/no-unsafe-member-access": "off"
+		files: ["**/*.ts", "**/*.tsx"],
+		languageOptions: {
+			parser: tseslint.parser,
+			parserOptions: {
+				project: ["./tsconfig.json"]
+			}
 		}
+	},
+
+	{
+		files: ["**/*.jsx", "**/*.tsx"],
+		plugins: {
+			react,
+			"react-hooks": reactHooks,
+			"@next/next": next
+		},
+		settings: {
+			react: {
+				version: "detect"
+			}
+		},
+		rules: {
+			"react/react-in-jsx-scope": "off",
+			"react/prop-types": "off",
+			"react-hooks/rules-of-hooks": "error",
+			"react-hooks/exhaustive-deps": "warn",
+			...next.configs["core-web-vitals"].rules
+		}
+	},
+
+	{
+		plugins: {
+			import: importPlugin
+		},
+		rules: {
+			"import/order": [
+				"warn",
+				{
+					groups: [["builtin", "external"], "internal", ["parent", "sibling", "index"]],
+					"newlines-between": "always",
+					alphabetize: { order: "asc", caseInsensitive: true }
+				}
+			]
+		}
+	},
+
+	{
+		plugins: {
+			"unused-imports": unusedImports
+		},
+		rules: {
+			"no-unused-vars": "off",
+			"@typescript-eslint/no-unused-vars": "off",
+			"unused-imports/no-unused-imports": "error",
+			"unused-imports/no-unused-vars": [
+				"warn",
+				{
+					vars: "all",
+					varsIgnorePattern: "^_",
+					argsIgnorePattern: "^_"
+				}
+			]
+		}
+	},
+
+	{
+		rules: {
+			"no-debugger": "error",
+			"prefer-const": "error",
+			"no-var": "error",
+			"@typescript-eslint/no-explicit-any": "warn",
+			"@typescript-eslint/explicit-module-boundary-types": "off"
+		}
+	},
+
+	prettier,
+
+	{
+		ignores: [".next/**", "node_modules/**"]
 	}
-)
+]
