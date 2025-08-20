@@ -6,10 +6,6 @@
 eslint @eslint/js eslint-config-prettier eslint-plugin-import eslint-plugin-unused-imports typescript-eslint
 ```
 
-```
-
-```
-
 <p><b>Config for Next.js(React)</b> - next.js</p>
 
 ```bash
@@ -20,8 +16,4 @@ bun add -D eslint @eslint/js eslint-config-prettier eslint-plugin-import eslint-
 
 ```bash
 bun add -D eslint @eslint/js globals esling-plugin-prettier typescript-eslint
-```
-
-```
-
 ```
