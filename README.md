@@ -1,15 +1,27 @@
 # eslint-config
 
-Install these dependencies for all configs
+<p><b>Base config for the extensions</b> - base.js</p>
 
 ```bash
-bun add -D eslint @eslint/js typescript-eslint eslint-plugin-import eslint-plugin-unused-imports eslint-config-prettier
+eslint @eslint/js eslint-config-prettier eslint-plugin-import eslint-plugin-unused-imports typescript-eslint
 ```
 
-<p><b>Normal config for the extensions</b> - normal-config.js</p>
+```
 
-<p><b>Config for Next.js(React)</b> - nextjs-config.js</p>
+```
+
+<p><b>Config for Next.js(React)</b> - next.js</p>
 
 ```bash
-bun add -D eslint-plugin-react eslint-plugin-react-hooks @next/eslint-plugin-next
+bun add -D eslint @eslint/js eslint-config-prettier eslint-plugin-import eslint-plugin-unused-imports typescript-eslint eslint-plugin-react eslint-plugin-react-hooks @next/eslint-plugin-next
+```
+
+<p><b>Config for Nest.js</b> - nest.js</p>
+
+```bash
+bun add -D eslint @eslint/js globals esling-plugin-prettier typescript-eslint
+```
+
+```
+
 ```
